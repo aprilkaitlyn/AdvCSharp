@@ -1,0 +1,49 @@
+using System;
+
+namespace Encapsulation_Lecture { 
+    //class or structure specifying how accessible its members are to outside code
+    //used to hide the implementation details of a class or method (hide what's going on behind the scenes)
+
+    class Program
+    { 
+    
+        static void Main(string[] args)
+        {
+            var car = new Car() { MyProperty = 10 }; //MyProperty will set myVar (private) equal to 10
+            
+            car.Display();
+        }
+    }
+
+    class Car
+        {
+        private int myVar;
+
+        public int MyProperty { //this can be accessed outside Car class, myVar inside of it cannot be accessed outside Car
+            get
+            {
+                //only reveal this var to users with certain rights
+                //could do something like if (user.role = "admin")
+                return myVar;
+            }
+            set
+            {
+                //does this value make sense?
+                //could do something like if (value < 0 or > 200)
+                myVar = value;
+            }
+        } //propfull tab tab...mine doesn't do all that it is supposed to
+
+
+    public void Display() 
+        {
+            var value = CreateDisplay();
+            Console.WriteLine(value);
+        }
+
+        private string CreateDisplay() //only accessed inside Display
+        {
+            return $"Car: {myVar}";
+        }
+    }
+}
