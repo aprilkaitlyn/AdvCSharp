@@ -1,0 +1,48 @@
+using System;
+
+namespace Polymorph_Lecture
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var car = new Auto { Make = "Mini", Model = "Cooper", Year = 2021 };
+            //car.Display();
+            Print(car); //same print out as car.Display() but using polymorphism
+            Console.WriteLine();
+
+            var suv = new SUV { Make = "Nissan", Model = "Murano", Year = 2006 };
+            suv.DrivingMechanism = "All Wheel Drive";
+            //suv.Display();
+            Print(suv); 
+            Console.WriteLine();
+        }
+
+        private static void Print (Auto a) //method with polymorphism
+        {
+            a.Display();
+        }
+    }
+
+    public class Auto
+    {
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+
+        public virtual void Display() //make virtual to allow child (SUV) class to override
+        {
+            Console.WriteLine($"Car: {Year} {Make} {Model}");
+        }
+    }
+
+    public class SUV : Auto //using inheritance
+    {
+        public string DrivingMechanism { get; set; }
+
+        public override void Display() //add override to u know.. override
+        {
+            Console.WriteLine($"SUV: {Year} {Make} {Model} {DrivingMechanism}");
+        }
+    }
+}
