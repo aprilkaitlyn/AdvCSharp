@@ -129,7 +129,7 @@ namespace HW2Tests
             //ASSERT
             Assert.IsInstanceOfType(name, typeof(string));
         }
-        #endregion // //FAILS
+        #endregion 
         #endregion
 
         #region Book Tests
@@ -380,7 +380,6 @@ namespace HW2Tests
             Assert.IsInstanceOfType(ship, typeof(double));
         }
         #endregion
-
         #endregion
 
         #region SnackTests
