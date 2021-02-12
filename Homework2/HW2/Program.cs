@@ -5,7 +5,7 @@ namespace HW2 //this is all copied from homework instructions
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var appointment = new Appointment()
             {
@@ -51,7 +51,7 @@ namespace HW2 //this is all copied from homework instructions
                 }
             }
             var taxAmount = CalculateTax(taxableItems);
-            Console.WriteLine($"Total tax amount: {taxAmount.ToString("C")}");
+            Console.WriteLine($"Total tax amount: {taxAmount:C}");
             Console.WriteLine();
 
             var shippableItems = new List<IShippable>();
@@ -63,45 +63,43 @@ namespace HW2 //this is all copied from homework instructions
                 }
             }
             var shippingAmount = CalculateShipping(shippableItems);
-            Console.WriteLine($"Total shipping amount: {shippingAmount.ToString("C")}");
+            Console.WriteLine($"Total shipping amount: {shippingAmount:C}");
             Console.WriteLine();
 
             var total = CompleteTransaction(items);
 
             var grandTotal = shippingAmount + taxAmount + total;
             Console.WriteLine("============");
-            Console.WriteLine($"Grand Total: {grandTotal.ToString("C")}");
+            Console.WriteLine($"Grand Total: {grandTotal:C}");
             Console.WriteLine();
-
         }
 
-        static double CalculateTax(List<ITaxable> items)
+        public static double GrandTotal(double shipping, double tax, double total) //added
+        {
+            return shipping + tax + total;
+        }
+
+        public static double CalculateTax(List<ITaxable> items)
         {
             double tax = 0D;
-
             foreach (var item in items)
             {
                 tax += item.Tax();
             }
-
             return tax;
-
         }
 
-        static double CalculateShipping(List<IShippable> items)
+        public static double CalculateShipping(List<IShippable> items)
         {
             double shipping = 0D;
-
             foreach (var item in items)
-
             {
                 shipping += item.Ship();
             }
-
             return shipping;
         }
 
-        static double CompleteTransaction(List<IPurchasable> items)
+        public static double CompleteTransaction(List<IPurchasable> items)
         {
             var total = 0D;
             items.ForEach(p => p.Purchase());
@@ -119,7 +117,7 @@ namespace HW2 //this is all copied from homework instructions
 
         public void Purchase()
         {
-            Console.WriteLine($"Payment for Appointment for {Name} from {StartDateTime} to {EndDateTime} for {Price.ToString("C0")}.");
+            Console.WriteLine($"Payment for Appointment for {Name} from {StartDateTime} to {EndDateTime} for {Price:C0}.");
         }
     }
 
@@ -132,12 +130,12 @@ namespace HW2 //this is all copied from homework instructions
 
         public void Purchase()
         {
-            Console.WriteLine($"Purchasing {Title} for {Price.ToString("C0")}.");
+            Console.WriteLine($"Purchasing {Title} for {Price:C0}.");
         }
 
         public double Ship()
         {
-            Console.WriteLine($"    ShippingRate: {ShippingRate.ToString("C0")}");
+            Console.WriteLine($"    ShippingRate: {ShippingRate:C0}");
             return ShippingRate;
         }
 
@@ -158,12 +156,12 @@ namespace HW2 //this is all copied from homework instructions
 
         public void Purchase()
         {
-            Console.WriteLine($"Purchasing TShirt {Size} for {Price.ToString("C0")}.");
+            Console.WriteLine($"Purchasing TShirt {Size} for {Price:C0}.");
         }
 
         public double Ship()
         {
-            Console.WriteLine($"    ShippingRate: {ShippingRate.ToString("C0")}");
+            Console.WriteLine($"    ShippingRate: {ShippingRate:C0}");
             return ShippingRate;
         }
 
@@ -181,14 +179,13 @@ namespace HW2 //this is all copied from homework instructions
 
         public void Purchase()
         {
-            Console.WriteLine($"Purchasing a snack for {Price.ToString("C0")}.");
+            Console.WriteLine($"Purchasing a snack for {Price:C0}.");
         }
     }
 
     public interface IPurchasable
     {
         double Price { get; set; }
-
         void Purchase();
     }
 
