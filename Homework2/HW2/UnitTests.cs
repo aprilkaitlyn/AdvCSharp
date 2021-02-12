@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HW2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -255,6 +256,40 @@ namespace HW2Tests
             Assert.IsInstanceOfType(ship, typeof(double));
         }
         #endregion
+
+        #region Book Method Return Tests
+        [TestMethod]
+        public void DoesBookShipReturnShipRateTest() //passes
+        {
+            //ARRANGE
+            Book b = new Book();
+            double ship1;
+            double ship2;
+
+            //ACT
+            ship1 = b.Ship();
+            ship2 = b.ShippingRate;
+
+            //ASSERT
+            Assert.AreEqual(ship1, ship2); //this tests that the Ship() method returns the ShippingRate      
+        }
+
+        [TestMethod]
+        public void DoesBookTaxReturnTaxRateTest() //passes
+        {
+            //ARRANGE
+            Book b = new Book();
+            double tax1;
+            double tax2;
+
+            //ACT
+            tax1 = b.Tax();
+            tax2 = b.TaxRate;
+
+            //ASSERT
+            Assert.AreEqual(tax1, tax2); //this tests that the Tax() method returns the TaxRate
+        }
+        #endregion
         #endregion
 
         #region TshirtTests
@@ -380,9 +415,44 @@ namespace HW2Tests
             Assert.IsInstanceOfType(ship, typeof(double));
         }
         #endregion
+
+        #region Method Return Tests
+        [TestMethod]
+        public void DoesTeeShipReturnShipRateTest() //passes
+        {
+            //ARRANGE
+            TShirt t = new TShirt();
+            double ship1;
+            double ship2;
+
+            //ACT
+            ship1 = t.Ship();
+            ship2 = t.ShippingRate;
+
+            //ASSERT
+            Assert.AreEqual(ship1, ship2); //this tests that the Ship() method returns the ShippingRate      
+        }
+
+        [TestMethod]
+        public void DoesTeeTaxReturnTaxRateTest() //passes
+        {
+            //ARRANGE
+            TShirt t = new TShirt();
+            double tax1;
+            double tax2;
+
+            //ACT
+            tax1 = t.Tax();
+            tax2 = t.TaxRate;
+
+            //ASSERT
+            Assert.AreEqual(tax1, tax2); //this tests that the Tax() method returns the TaxRate
+        }
         #endregion
 
-        #region SnackTests
+        #endregion
+
+        #region Snack Tests
         [TestMethod]
         public void IsSnackNotNullTest() //passes
         {
@@ -409,6 +479,70 @@ namespace HW2Tests
 
             //ASSERT
             Assert.IsInstanceOfType(price, typeof(double));
+        }
+        #endregion
+
+        #region Interface List Tests
+        [TestMethod]
+        public void IShippableListTests() //passes
+        { 
+            //ARRANGE
+            List<IShippable> shipList = new List<IShippable>();
+
+            //ACT
+            shipList.Add(new TShirt {Price = 10, ShippingRate = 1, Size = "small", TaxRate = 0.06D});
+            shipList.Add(new Book { Price = 20, ShippingRate = 2, Title = "book", TaxRate = 0.06D });
+
+            //ASSERT
+            CollectionAssert.AllItemsAreInstancesOfType(shipList, typeof(IShippable));
+        }
+
+        [TestMethod]
+        public void ITaxableListTests() //passes
+        {
+            //ARRANGE
+            List<ITaxable> taxList = new List<ITaxable>();
+
+            //ACT
+            taxList.Add(new TShirt { Price = 10, ShippingRate = 1, Size = "small", TaxRate = 0.06D });
+            taxList.Add(new Book { Price = 20, ShippingRate = 2, Title = "book", TaxRate = 0.06D });
+
+            //ASSERT
+            CollectionAssert.AllItemsAreInstancesOfType(taxList, typeof(ITaxable));
+        }
+
+        [TestMethod]
+        public void IPurchaseableListTests() //passes
+        {
+            //ARRANGE
+            List<IPurchasable> purchaseList = new List<IPurchasable>();
+
+            //ACT
+            purchaseList.Add(new TShirt { Price = 10, ShippingRate = 1, Size = "small", TaxRate = 0.06D });
+            purchaseList.Add(new Book { Price = 20, ShippingRate = 2, Title = "book", TaxRate = 0.06D });
+            purchaseList.Add(new Appointment { Price = 20, Name = "name", EndDateTime = DateTime.Now, StartDateTime = DateTime.Now });
+            purchaseList.Add(new Snack { Price = 1 });
+
+            //ASSERT
+            CollectionAssert.AllItemsAreInstancesOfType(purchaseList, typeof(IPurchasable));
+        }
+        #endregion
+
+        #region Formula Test
+        [TestMethod]
+        public void GrandTotalCalculationTest() //passes
+        {
+            //ARRANGE
+            double shipAmount = 2;
+            double taxAmount = 2.50;
+            double total = 30;
+            double grandTotal;
+
+            //ACT
+            grandTotal = Program.GrandTotal(shipAmount, taxAmount, total);
+
+            //ASSERT
+            Assert.AreEqual(34.50, grandTotal);
         }
         #endregion
     }
