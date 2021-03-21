@@ -1,7 +1,7 @@
   public class Chore
     {
         public string ChoreName { get; set; }
-        public Person Owner { get; set; }
+        public Person Owner { get; set; } //bad dependency on Person class no no
         public double HoursWorked { get; private set; }
         public bool IsComplete { get; private set; }
 
