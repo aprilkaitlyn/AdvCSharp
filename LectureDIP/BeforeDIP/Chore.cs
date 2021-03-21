@@ -8,14 +8,14 @@
         public void PerformedChore(double hours)
         {
             HoursWorked += hours;
-            Logger log = new Logger();
+            Logger log = new Logger(); //dependency on Logger class
             log.Log($"{Owner.FirstName} worked on {ChoreName}");
         }
 
         public void CompletedChore()
         {
             IsComplete = true;
-            Logger log = new Logger();
+            Logger log = new Logger(); //dependency on Logger class
             log.Log($"Completed {ChoreName} and it took {HoursWorked} hours");
 
             Emailer emailer = new Emailer();
