@@ -4,37 +4,19 @@ namespace HW4EX1
 {
     class Program
     {
-        static void Main(string[] args) //unmodified code for part 2 
+        static void Main(string[] args) //following strategy pattern
         {
-            BurgerOrderService order = new BurgerOrderService();
-                order.orderBurger(2);       // only want a burger only order
-                order.orderFries(0);        // throws an exception
-        }
-    }
+            var context = new Context();
 
+            context.SetStrategy(new BurgerOrderService());
+            context.OrderLogic(2);
 
-    interface IOrder
-    {
-        void orderBurger(int quantity);
-        void orderFries(int fries);
-        void orderCombo(int quantity, int fries);
-    }
+            Console.WriteLine();
 
-    public class BurgerOrderService : IOrder
-    {
-        public void orderBurger(int quantity)
-        {
-            Console.WriteLine($"Received order for {quantity} burgers");
-        }
+            context.SetStrategy(new FryOrderService());
+            context.OrderLogic(0);
 
-        public void orderFries(int fries)
-        {
-            throw new NotImplementedException("No fries in burger only order");
-        }
-
-        public void orderCombo(int quantity, int fries)
-        {
-            throw new NotImplementedException("No combo in burger only order");
+            Console.WriteLine();
         }
     }
 }
